@@ -10,10 +10,14 @@ export default function Home() {
             <Container>
                 <Cadastro to="/cadastro">Cadastro</Cadastro>
                 <Cadastro to="/pagamentos">Pagamentos</Cadastro>
+                <Cadastro to="/consulta">Consulta</Cadastro>
             </Container>
         </>
     )
 }
+
+
+
 const Container = styled.div`
     width: 100%;
     height: 100vh;
