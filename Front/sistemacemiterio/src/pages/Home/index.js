@@ -8,7 +8,8 @@ export default function Home() {
         <>
             <Header />
             <Container>
-                <Cadastro to="/cadastro">Cadastro</Cadastro>
+                <Cadastro to="/cadastro">Cadastro Sepultura</Cadastro>
+                <Cadastro to="/cadastroSepultado">Cadastro Sepultado</Cadastro>
                 <Cadastro to="/pagamentos">Pagamentos</Cadastro>
                 <Cadastro to="/consulta">Consulta</Cadastro>
             </Container>

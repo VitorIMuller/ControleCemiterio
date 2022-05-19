@@ -5,16 +5,19 @@ import Header from "../../components/header";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
-export default function Consulta() {
+export default function CadastroSepultado() {
     return (
         <>
             <Header />
             <Container>
                 <BackHome to="/"><Button variant="contained" size="large">Voltar Ao Inicio</Button></BackHome>
-                <Title>Consulta</Title>
+                <Title>Cadastro</Title>
                 <ContainerInputs>
-                    <TextField id="outlined-basic" label="Nome do responsável" variant="outlined" />
-                    <Button variant="contained" size="large">Consultar</Button>
+                    <TextField id="outlined-basic" label="Id Sepultura" variant="outlined" />
+                    <TextField id="outlined-basic" label="Nome do Sepultado" variant="outlined" />
+                    <TextField id="outlined-basic" label="Data de Nascimento" variant="outlined" />
+                    <TextField id="outlined-basic" label="Data de Falescimento" variant="outlined" />
+                    <Button variant="contained" size="large">Cadastrar</Button>
                 </ContainerInputs>
             </Container>
         </>
@@ -74,20 +77,3 @@ const BackHome = styled(Link)`
 
 
 `
-// const Cadastro = styled(Link)`
-//     all: unset;
-//     width: 100%;
-//     height: 60px;
-
-//     border-radius: 10px;
-
-//     display: flex;
-
-//     align-items: center;
-//     justify-content: center;
-
-//     background-color: lightblue;
-//     font-weight: 700;
-
-
-// `

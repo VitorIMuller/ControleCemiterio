@@ -2,8 +2,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Header from "../../components/header";
-import backgroundImage from "../../components/SANTO INACIO2.jpg";
-import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 

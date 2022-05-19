@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Cadastro from "./pages/Cadastro"
 import Pagamentos from "./pages/Pagamentos"
 import Consulta from "./pages/Consulta"
+import CadastroSepultado from "./pages/CadastroSepultado"
 
 export default function App() {
     return (
@@ -14,6 +15,7 @@ export default function App() {
                 <Route path="cadastro" element={<Cadastro />} />
                 <Route path="/pagamentos" element={<Pagamentos />} />
                 <Route path="/consulta" element={<Consulta />} />
+                <Route path="/cadastroSepultado" element={<CadastroSepultado />} />
             </Routes>
         </Router>
 
