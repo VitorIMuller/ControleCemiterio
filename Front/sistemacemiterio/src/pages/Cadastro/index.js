@@ -1,12 +1,18 @@
-// import { Link } from "react-router-dom";
-import { Link, useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import Header from "../../components/header";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useState } from "react";
 import * as api from "../../Services/api"
-
+import { useNavigate } from "react-router-dom";
+import {
+    BackHome,
+    Title,
+    Container,
+    ContainerInputs,
+    CenterLoader
+} from "./style.js"
+import Loader from "../../components/loading";
+import Swal from "sweetalert2";
 
 export default function Cadastro() {
 
@@ -23,28 +29,56 @@ export default function Cadastro() {
         celular: "",
         email: "",
         cpf: ""
-    })
+    });
+    const [isLoading, setIsLoading] = useState(false);
+
 
 
     function handleRegister(e) {
         e.preventDefault();
-
         if (formData.idSepultura && formData.nomeResponsavel && formData.endereco && formData.bairro && formData.cidade) {
-
+            setIsLoading(true)
             api.createSepultura(formData).then(() => {
+                setIsLoading(false)
+                Swal.fire({
+                    title: 'Deseja concluir o cadastro?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sim, eu quero!',
+                    cancelButtonText: 'Cancelar',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire(
+                            'Criado!',
+                            'Cadastro criado com sucesso!',
+                            'success'
+                        ).then(() => {
+                            navigate("/")
+                        })
 
-                alert("Criado Com Sucesso!")
-                navigate("/")
+                    }
+                })
+
             }
             ).catch((error) => {
-                alert(error.message)
+                setIsLoading(false)
+                console.log(error)
+                Swal.fire(
+                    `${error.response.data}`,
+                    '',
+                    'warning'
+                )
+
             });
-
-
         } else {
-            alert("favor preencher os campos obrigatórios!")
+            Swal.fire(
+                'Favor preencher os campos obrigatórios!',
+                '',
+                'warning'
+            )
         }
-
     }
 
     return (
@@ -64,80 +98,18 @@ export default function Cadastro() {
                     <TextField id="outlined-basic" label="Celular" variant="outlined" onChange={(e) => setFormData({ ...formData, celular: e.target.value })} />
                     <TextField id="outlined-basic" label="Email" variant="outlined" onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
                     <TextField id="outlined-basic" label="CPF" variant="outlined" onChange={(e) => setFormData({ ...formData, cpf: e.target.value })} />
-                    <Button variant="contained" size="large" onClick={handleRegister}>Cadastrar</Button>
+                    {isLoading ?
+                        <CenterLoader><Loader /></CenterLoader>
+                        :
+                        <Button variant="contained" size="large" onClick={handleRegister}>Cadastrar</Button>
+                    }
                 </ContainerInputs>
             </Container>
+
+
+
         </>
     )
 }
 
 
-const Title = styled.div`
-    font-family: 'Lato', sans-serif;    
-    font-size: 40px;
-    font-weight: 700;
-`
-
-const ContainerInputs = styled.div`
-    display: flex;
-    flex-direction: column;
-
-    gap: 10px;
-
-    width: 50%;
-
-
-`
-const Container = styled.div`
-    width: 100%;
-    height: 100%;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    gap: 20px;
-
-    padding-top: 10vh;
-
-    font-family: 'Lato', sans-serif;
-
-    background-color: white;
-    
-    
-`
-const BackHome = styled(Link)`
-
-    all:unset;
-    width: 190px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
-
-    border-radius: 10px;
-
-    font-family: 'Lato', sans-serif;
-    font-weight: 700;
-
-
-
-`
-// const Cadastro = styled(Link)`
-//     all: unset;
-//     width: 100%;
-//     height: 60px;
-
-//     border-radius: 10px;
-
-//     display: flex;
-
-//     align-items: center;
-//     justify-content: center;
-
-//     background-color: lightblue;
-//     font-weight: 700;
-
-
-// `
