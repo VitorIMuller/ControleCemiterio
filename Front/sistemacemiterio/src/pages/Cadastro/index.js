@@ -94,8 +94,8 @@ export default function Cadastro() {
                     <TextField id="outlined-basic" label="Nº" variant="outlined" onChange={(e) => setFormData({ ...formData, numero: e.target.value })} />
                     <TextField id="outlined-basic" label="Bairro" variant="outlined" required onChange={(e) => setFormData({ ...formData, bairro: e.target.value })} />
                     <TextField id="outlined-basic" label="Cidade" variant="outlined" required onChange={(e) => setFormData({ ...formData, cidade: e.target.value })} />
-                    <TextField id="outlined-basic" label="Telefone" variant="outlined" onChange={(e) => setFormData({ ...formData, telefone: e.target.value })} />
-                    <TextField id="outlined-basic" label="Celular" variant="outlined" onChange={(e) => setFormData({ ...formData, celular: e.target.value })} />
+                    <TextField id="outlined-basic" label="Telefone" variant="outlined" required onChange={(e) => setFormData({ ...formData, telefone: e.target.value })} />
+                    <TextField id="outlined-basic" label="Celular" variant="outlined" required onChange={(e) => setFormData({ ...formData, celular: e.target.value })} />
                     <TextField id="outlined-basic" label="Email" variant="outlined" onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
                     <TextField id="outlined-basic" label="CPF" variant="outlined" onChange={(e) => setFormData({ ...formData, cpf: e.target.value })} />
                     {isLoading ?

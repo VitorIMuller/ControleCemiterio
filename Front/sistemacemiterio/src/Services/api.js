@@ -9,7 +9,13 @@ async function createSepultura(formData) {
     return promise;
 }
 
+async function addSepultado(formData) {
+    const promise = await axios.post(`${BASE_URL}/cadastroSepultado`, formData)
+    return promise;
+}
+
 
 export {
-    createSepultura
+    createSepultura,
+    addSepultado
 }
