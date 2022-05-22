@@ -14,8 +14,14 @@ async function addSepultado(formData) {
     return promise;
 }
 
+async function getTumulo(formData) {
+    const promise = await axios.get(`${BASE_URL}/consultaCadastro`, formData)
+    return promise;
+}
+
 
 export {
     createSepultura,
-    addSepultado
+    addSepultado,
+    getTumulo
 }
