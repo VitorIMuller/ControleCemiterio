@@ -1,12 +1,24 @@
-// import { Link } from "react-router-dom";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import {
+    BackHome,
+    Title,
+    Container,
+    ContainerInputs,
+    CenterLoader,
+    Subtitle,
+    Describe,
+    ContainerMenu
+} from "./style.js"
 import Header from "../../components/header";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useEffect, useState } from "react";
 import { Autocomplete } from "@mui/material";
 import * as api from "./../../Services/api"
+import Loader from "../../components/loading";
+import { useNavigate } from "react-router-dom";
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
+
 
 export default function Consulta() {
 
@@ -26,6 +38,8 @@ export default function Consulta() {
         cpf: ""
     });
     const [sepultados, setSepultados] = useState()
+    const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
 
     function getTumulos(respSearch) {
 
@@ -38,6 +52,41 @@ export default function Consulta() {
         const data = usersData.find(el => el.nomeResponsavel === name)
         setTumulo(data)
         setSepultados(data.sepultado)
+        setFormData({
+            idSepultura: data.idSepultura,
+            nomeResponsavel: data.nomeResponsavel,
+            endereco: data.endereco,
+            numero: data.numero,
+            bairro: data.bairro,
+            cidade: data.cidade,
+            telefone: data.telefone,
+            celular: data.celular,
+            email: data.email,
+            cpf: data.cpf
+        })
+    }
+
+    function atualizarTumulo(formData) {
+        console.log(formData)
+        setLoading(true)
+        api.atualizarTumulo(formData).then(() => {
+            setLoading(false)
+            alert("Tumulo Atualizado!")
+            navigate("/")
+        }).catch((error) => {
+            alert(error.response.data)
+        })
+    }
+
+    function deleteFunction(id) {
+
+        console.log(id)
+        api.deletarSepultado(id).then(() => {
+            alert("Deletado Com Sucesso!")
+            window.location.reload()
+        }).catch((error) => {
+            alert(error.response.data)
+        })
     }
 
 
@@ -52,56 +101,95 @@ export default function Consulta() {
                 <BackHome to="/"><Button variant="contained" size="large">Voltar Ao Inicio</Button></BackHome>
                 <Title>Consulta</Title>
                 <ContainerInputs>
-                    <TextField id="outlined-basic" label="Nome do responsável" variant="outlined" />
                     <Autocomplete
                         disablePortal
                         freeSolo
                         autoComplete={true}
                         id="combo-box-demo"
                         options={usersData.map((el) => el.nomeResponsavel)}
-                        // sx={}
                         onInputChange={(e, value) => { setRespSearch(value) }}
                         renderInput={(params) => <TextField {...params} label="Nome do Responsável" />}
                     />
                     <Button variant="contained" size="large" onClick={() => getTumuloByName(respSearch)}>Consultar</Button>
                     {tumulo &&
                         <>
-                            <p>Id Sepultura</p>
-                            <TextField id="outlined-basic" label={tumulo.idSepultura} disabled variant="outlined" onChange={(e) => setFormData({ ...formData, idSepultura: e.target.value })} />
-                            <p>Nome Responsavel</p>
-                            <TextField id="outlined-basic" label={tumulo.nomeResponsavel} variant="outlined" onChange={(e) => setFormData({ ...formData, nomeResponsavel: e.target.value })} />
-                            <p>Endereço</p>
-                            <TextField id="outlined-basic" label={tumulo.endereco} variant="outlined" onChange={(e) => setFormData({ ...formData, endereco: e.target.value })} />
-                            <p>Numero</p>
-                            <TextField id="outlined-basic" label={tumulo.numero} variant="outlined" onChange={(e) => setFormData({ ...formData, numero: e.target.value })} />
-                            <p>Bairro</p>
-                            <TextField id="outlined-basic" label={tumulo.bairro} variant="outlined" onChange={(e) => setFormData({ ...formData, bairro: e.target.value })} />
-                            <p>Cidade</p>
-                            <TextField id="outlined-basic" label={tumulo.cidade} variant="outlined" onChange={(e) => setFormData({ ...formData, cidade: e.target.value })} />
-                            <p>Telefone</p>
-                            <TextField id="outlined-basic" label={tumulo.telefone} variant="outlined" onChange={(e) => setFormData({ ...formData, telefone: e.target.value })} />
-                            <p>Celular</p>
-                            <TextField id="outlined-basic" label={tumulo.celular} variant="outlined" onChange={(e) => setFormData({ ...formData, celular: e.target.value })} />
-                            <p>Email</p>
-                            <TextField id="outlined-basic" label={tumulo.email} variant="outlined" onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
-                            <p>Cpf</p>
-                            <TextField id="outlined-basic" label={tumulo.cpf} variant="outlined" onChange={(e) => setFormData({ ...formData, cpf: e.target.value })} />
-                            <Button variant="contained" size="large" onClick={() => getTumuloByName(respSearch)}>Atualizar</Button>
-                            <h1>SEPULTADOS</h1>
+                            <Subtitle>Id Sepultura</Subtitle>
+                            <TextField id="outlined-basic"
+                                label={tumulo.idSepultura}
+                                disabled
+                                variant="outlined"
+                                onChange={(e) => setFormData({ ...formData, idSepultura: e.target.value })} />
+                            <Subtitle>Nome Responsavel</Subtitle>
+                            <TextField id="outlined-basic"
+                                label={tumulo.nomeResponsavel}
+                                variant="outlined"
+                                onChange={(e) => setFormData({ ...formData, nomeResponsavel: e.target.value })} />
+                            <Subtitle>Endereço</Subtitle>
+                            <TextField id="outlined-basic"
+                                label={tumulo.endereco}
+                                variant="outlined"
+                                onChange={(e) => setFormData({ ...formData, endereco: e.target.value })} />
+                            <Subtitle>Numero</Subtitle>
+                            <TextField id="outlined-basic"
+                                label={tumulo.numero}
+                                variant="outlined"
+                                onChange={(e) => setFormData({ ...formData, numero: e.target.value })} />
+                            <Subtitle>Bairro</Subtitle>
+                            <TextField id="outlined-basic"
+                                label={tumulo.bairro}
+                                variant="outlined"
+                                onChange={(e) => setFormData({ ...formData, bairro: e.target.value })} />
+                            <Subtitle>Cidade</Subtitle>
+                            <TextField id="outlined-basic"
+                                label={tumulo.cidade}
+                                variant="outlined"
+                                onChange={(e) => setFormData({ ...formData, cidade: e.target.value })} />
+                            <Subtitle>Telefone</Subtitle>
+                            <TextField id="outlined-basic"
+                                label={tumulo.telefone}
+                                variant="outlined"
+                                onChange={(e) => setFormData({ ...formData, telefone: e.target.value })} />
+                            <Subtitle>Celular</Subtitle>
+                            <TextField id="outlined-basic"
+                                label={tumulo.celular}
+                                variant="outlined"
+                                onChange={(e) => setFormData({ ...formData, celular: e.target.value })} />
+                            <Subtitle>Email</Subtitle>
+                            <TextField id="outlined-basic"
+                                label={tumulo.email}
+                                variant="outlined"
+                                onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
+                            <Subtitle>Cpf</Subtitle>
+                            <TextField id="outlined-basic"
+                                label={tumulo.cpf}
+                                variant="outlined"
+                                onChange={(e) => setFormData({ ...formData, cpf: e.target.value })} />
+                            {loading ?
+                                <CenterLoader><Loader /></CenterLoader>
+                                :
+                                <Button variant="contained" size="large" onClick={() => atualizarTumulo(formData)}>Atualizar</Button>
+                            }
+                            <Describe>SEPULTADOS</Describe>
                             {sepultados ?
                                 sepultados.map((sepultado) =>
                                     <>
-                                        <h2>SEPULTADO COLOCAR UM REMOVER SEPULTADO</h2>
-                                        <p>Nome</p>
+                                        <ContainerMenu>
+
+                                            <Describe>SEPULTADO COLOCAR UM REMOVER SEPULTADO</Describe>
+                                            <IconButton aria-label="delete" size="large">
+                                                <DeleteIcon onClick={() => deleteFunction(sepultado.id)} fontSize="inherit" />
+                                            </IconButton>
+                                        </ContainerMenu>
+                                        <Subtitle>Nome</Subtitle>
                                         <TextField id="outlined-basic" label={sepultado.nomeSepultado} variant="outlined" />
-                                        <p>Data De Nascimento</p>
+                                        <Subtitle>Data De Nascimento</Subtitle>
                                         <TextField id="outlined-basic" label={sepultado.dataNascimento} variant="outlined" />
-                                        <p>Data De Falecimento</p>
+                                        <Subtitle>Data De Falecimento</Subtitle>
                                         <TextField id="outlined-basic" label={sepultado.dataFalescimento} variant="outlined" />
                                     </>
                                 )
                                 :
-                                "NÃO HÁ SEPULTADOS"
+                                <Subtitle>NÃO HÁ SEPULTADOS</Subtitle>
                             }
 
                         </>
@@ -113,72 +201,3 @@ export default function Consulta() {
 }
 
 
-const Title = styled.div`
-    font-family: 'Lato', sans-serif;    
-    font-size: 40px;
-    font-weight: 700;
-`
-
-const ContainerInputs = styled.div`
-    display: flex;
-    flex-direction: column;
-
-    gap: 10px;
-
-    width: 50%;
-
-
-`
-const Container = styled.div`
-    width: 100%;
-    height: 100%;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    gap: 20px;
-
-    padding-top: 10vh;
-
-    font-family: 'Lato', sans-serif;
-
-    background-color: white;
-    
-    
-`
-const BackHome = styled(Link)`
-
-    all:unset;
-    width: 190px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
-
-    border-radius: 10px;
-
-    font-family: 'Lato', sans-serif;
-    font-weight: 700;
-
-
-
-`
-// const Cadastro = styled(Link)`
-//     all: unset;
-//     width: 100%;
-//     height: 60px;
-
-//     border-radius: 10px;
-
-//     display: flex;
-
-//     align-items: center;
-//     justify-content: center;
-
-//     background-color: lightblue;
-//     font-weight: 700;
-
-
-// `

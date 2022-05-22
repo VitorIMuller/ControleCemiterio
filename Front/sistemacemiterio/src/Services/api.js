@@ -19,9 +19,24 @@ async function getTumulo(formData) {
     return promise;
 }
 
+async function atualizarTumulo(formData) {
+    const promise = await axios.patch(`${BASE_URL}/atualizaCadastro`, formData)
+    return promise;
+}
+
+
+async function deletarSepultado(id) {
+    const promise = await axios.delete(`${BASE_URL}/deletarSepultado/${id}`, id)
+    return promise;
+}
+
+
+
 
 export {
     createSepultura,
     addSepultado,
-    getTumulo
+    getTumulo,
+    atualizarTumulo,
+    deletarSepultado
 }
