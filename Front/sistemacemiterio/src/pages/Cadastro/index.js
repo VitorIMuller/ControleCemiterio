@@ -40,29 +40,16 @@ export default function Cadastro() {
             setIsLoading(true)
             api.createSepultura(formData).then(() => {
                 setIsLoading(false)
-                Swal.fire({
-                    title: 'Deseja concluir o cadastro?',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Sim, eu quero!',
-                    cancelButtonText: 'Cancelar',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        Swal.fire(
-                            'Criado!',
-                            'Cadastro criado com sucesso!',
-                            'success'
-                        ).then(() => {
-                            navigate("/")
-                        })
+                Swal.fire(
+                    'Criado!',
+                    'Cadastro Criado Com Sucesso!',
+                    'success'
+                )
+                navigate("/")
 
-                    }
-                })
 
-            }
-            ).catch((error) => {
+
+            }).catch((error) => {
                 setIsLoading(false)
                 console.log(error)
                 Swal.fire(

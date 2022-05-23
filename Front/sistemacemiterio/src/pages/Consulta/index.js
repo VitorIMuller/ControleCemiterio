@@ -18,7 +18,7 @@ import Loader from "../../components/loading";
 import { useNavigate } from "react-router-dom";
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
-
+import Swal from "sweetalert2";
 
 export default function Consulta() {
 
@@ -67,25 +67,42 @@ export default function Consulta() {
     }
 
     function atualizarTumulo(formData) {
-        console.log(formData)
         setLoading(true)
         api.atualizarTumulo(formData).then(() => {
             setLoading(false)
-            alert("Tumulo Atualizado!")
+            Swal.fire(
+                'Atualizado com sucesso!',
+                ''
+                ,
+                'success'
+            )
             navigate("/")
         }).catch((error) => {
-            alert(error.response.data)
+            Swal.fire(
+                `${error.response.data}`,
+                ''
+                ,
+                'warning'
+            )
         })
     }
 
     function deleteFunction(id) {
-
-        console.log(id)
         api.deletarSepultado(id).then(() => {
-            alert("Deletado Com Sucesso!")
+            Swal.fire(
+                'Deletado com sucesso!',
+                ''
+                ,
+                'success'
+            )
             window.location.reload()
         }).catch((error) => {
-            alert(error.response.data)
+            Swal.fire(
+                `${error.response.data}`,
+                ''
+                ,
+                'warning'
+            )
         })
     }
 
@@ -175,7 +192,7 @@ export default function Consulta() {
                                     <>
                                         <ContainerMenu>
 
-                                            <Describe>SEPULTADO COLOCAR UM REMOVER SEPULTADO</Describe>
+                                            <Describe>SEPULTADO</Describe>
                                             <IconButton aria-label="delete" size="large">
                                                 <DeleteIcon onClick={() => deleteFunction(sepultado.id)} fontSize="inherit" />
                                             </IconButton>
