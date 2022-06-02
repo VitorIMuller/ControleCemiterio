@@ -11,7 +11,6 @@ import Button from '@mui/material/Button';
 import { useState } from "react";
 import Loader from "../../components/loading";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
 import * as api from "../../Services/api"
 
 export default function CadastroSepultado() {
@@ -23,7 +22,6 @@ export default function CadastroSepultado() {
         dataFalescimento: ''
     })
     const [isLoading, setIsLoading] = useState(false);
-    const navigate = useNavigate();
 
     function handleRegister(e) {
         e.preventDefault();
@@ -36,20 +34,16 @@ export default function CadastroSepultado() {
                     'Cadastro criado com sucesso!',
                     'success')
 
-            })
+            }).catch((error) => {
+                setIsLoading(false)
+                console.log(error)
+                Swal.fire(
+                    `${error.response.data}`,
+                    '',
+                    'warning'
+                )
 
-            navigate("/")
-
-                .catch((error) => {
-                    setIsLoading(false)
-                    console.log(error)
-                    Swal.fire(
-                        `${error.response.data}`,
-                        '',
-                        'warning'
-                    )
-
-                });
+            });
         } else {
             Swal.fire(
                 'Favor preencher os campos obrigatórios!',
