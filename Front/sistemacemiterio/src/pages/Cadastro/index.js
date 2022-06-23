@@ -1,9 +1,8 @@
 import Header from "../../components/header";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { forwardRef, useState } from "react";
+import { useState } from "react";
 import * as api from "../../Services/api"
-import { useNavigate } from "react-router-dom";
 import {
     BackHome,
     Title,
@@ -18,9 +17,6 @@ import styled from "styled-components";
 
 export default function Cadastro() {
 
-
-
-    const navigate = useNavigate()
 
     const [formData, setFormData] = useState({
         idSepultura: "",
@@ -49,7 +45,6 @@ export default function Cadastro() {
                     'Cadastro Criado Com Sucesso!',
                     'success'
                 )
-                navigate("/")
 
 
 
@@ -106,7 +101,7 @@ export default function Cadastro() {
                             required
                             size="small"
                             sx={{
-                                '& > :not(style)': { width: '97ch' },
+                                '& > :not(style)': { width: '850px' },
                             }}
                             onChange={(e) => setFormData({ ...formData, endereco: e.target.value })} />
                         <TextField
@@ -115,7 +110,7 @@ export default function Cadastro() {
                             label="Nº"
                             variant="outlined"
                             sx={{
-                                '& > :not(style)': { width: '10ch' },
+                                '& > :not(style)': { width: '95px' },
                             }}
                             onChange={(e) => setFormData({ ...formData, numero: e.target.value })} />
                     </DoubleInput>
@@ -127,7 +122,7 @@ export default function Cadastro() {
                             required
                             size="small"
                             sx={{
-                                '& > :not(style)': { width: '50ch' },
+                                '& > :not(style)': { width: '500px' },
                             }}
                             onChange={(e) => setFormData({ ...formData, bairro: e.target.value })} />
                         <TextField
@@ -148,6 +143,9 @@ export default function Cadastro() {
                             variant="outlined"
                             required
                             size="small"
+                            sx={{
+                                '& > :not(style)': { width: '500px' },
+                            }}
                             onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
                         />
                         <TextField
@@ -156,6 +154,9 @@ export default function Cadastro() {
                             variant="outlined"
                             required
                             size="small"
+                            sx={{
+                                '& > :not(style)': { width: '50ch' },
+                            }}
                             onChange={(e) => setFormData({ ...formData, celular: e.target.value })} />
                     </DoubleInput>
                     <TextField
@@ -188,7 +189,7 @@ export default function Cadastro() {
 
 const DoubleInput = styled.div`
     display: flex;
-    gap: 15px
+    gap: 20px
 `;
 
 
