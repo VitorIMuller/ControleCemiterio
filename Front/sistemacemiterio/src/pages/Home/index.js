@@ -5,7 +5,7 @@ import backgroundImage from "../../components/SANTO INACIO2.jpg"
 
 export default function Home() {
     return (
-        <>
+        <ContainerBig>
             <Header />
             <Container>
                 <Cadastro to="/cadastro">Cadastro Sepultura</Cadastro>
@@ -13,7 +13,7 @@ export default function Home() {
                 <Cadastro to="/pagamentos">Pagamentos</Cadastro>
                 <Cadastro to="/consulta">Consulta</Cadastro>
             </Container>
-        </>
+        </ContainerBig>
     )
 }
 
@@ -21,7 +21,7 @@ export default function Home() {
 
 const Container = styled.div`
     width: 100%;
-    height: 100vh;
+    height: 90vh;
 
     display: flex;
     flex-direction: column;
@@ -39,6 +39,10 @@ const Container = styled.div`
     background-repeat: no-repeat;
     
 `
+
+const ContainerBig = styled.div`
+    
+`;
 const Cadastro = styled(Link)`
     all: unset;
     width: 100%;
